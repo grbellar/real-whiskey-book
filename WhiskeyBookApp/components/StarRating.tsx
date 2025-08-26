@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   label: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
     marginBottom: 12,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   ratingText: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
 });

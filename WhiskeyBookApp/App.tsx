@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 24,
+    paddingVertical: 16,
     gap: 12,
   },
   headerIcon: {
@@ -130,20 +130,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
     marginBottom: 4,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: theme.fontFamily.regular,
     color: theme.colors.mutedForeground,
   },
   main: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingVertical: 32,
+    paddingVertical: 20,
     paddingBottom: 100, // Space for bottom navigation
   },
 });

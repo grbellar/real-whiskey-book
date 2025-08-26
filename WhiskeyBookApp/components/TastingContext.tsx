@@ -29,6 +29,7 @@ interface TastingContextType {
   tastings: Tasting[];
   addTasting: (tasting: Omit<Tasting, 'id' | 'date'>) => void;
   updateTasting: (id: string, tasting: Omit<Tasting, 'id' | 'date'>) => void;
+  deleteTasting: (id: string) => void;
   addWhiskey: (whiskey: Omit<Whiskey, 'id'>) => Whiskey;
   whiskeyDatabase: Whiskey[];
   editingTasting: Tasting | null;
@@ -132,6 +133,10 @@ export function TastingProvider({ children }: { children: ReactNode }) {
     ));
   };
 
+  const deleteTasting = (id: string) => {
+    setTastings(prev => prev.filter(tasting => tasting.id !== id));
+  };
+
   const addWhiskey = (newWhiskeyData: Omit<Whiskey, 'id'>): Whiskey => {
     const whiskey: Whiskey = {
       ...newWhiskeyData,
@@ -146,6 +151,7 @@ export function TastingProvider({ children }: { children: ReactNode }) {
       tastings, 
       addTasting, 
       updateTasting,
+      deleteTasting,
       addWhiskey, 
       whiskeyDatabase,
       editingTasting,

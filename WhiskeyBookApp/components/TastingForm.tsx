@@ -167,6 +167,7 @@ export function TastingForm({ onCancelEdit }: TastingFormProps) {
     }
   };
 
+
   const handleSubmit = () => {
     if (!canProceed()) {
       Alert.alert('Error', 'Please complete all required fields');
@@ -285,25 +286,10 @@ export function TastingForm({ onCancelEdit }: TastingFormProps) {
             <View style={styles.stepContent}>
               <Text style={styles.stepHeading}>Select a Whiskey</Text>
               <Text style={styles.stepDescription}>
-                Choose from existing whiskies in your collection.
+                Choose from existing whiskies in your collection or add a new one.
               </Text>
               
               <View style={styles.whiskeyList}>
-                <TouchableOpacity
-                  onPress={handleAddNewWhiskey}
-                  style={styles.addNewWhiskeyItem}
-                >
-                  <View style={styles.addNewIcon}>
-                    <Text style={styles.addNewIconText}>+</Text>
-                  </View>
-                  <View style={styles.addNewContent}>
-                    <Text style={styles.addNewTitle}>Add New Whiskey</Text>
-                    <Text style={styles.addNewDescription}>
-                      Create a new whiskey entry for your collection
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-
                 {whiskeyDatabase.map((whiskey) => (
                   <TouchableOpacity
                     key={whiskey.id}
@@ -324,7 +310,19 @@ export function TastingForm({ onCancelEdit }: TastingFormProps) {
                     </View>
                   </TouchableOpacity>
                 ))}
+                <TouchableOpacity
+                  onPress={handleAddNewWhiskey}
+                  style={styles.addNewWhiskeyItem}
+                >
+                  <View style={styles.addNewIcon}>
+                    <Text style={styles.addNewIconText}>+</Text>
+                  </View>
+                  <View style={styles.addNewContent}>
+                    <Text style={styles.addNewTitle}>Add New Whiskey</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
+              
             </View>
           )}
 
@@ -440,6 +438,7 @@ export function TastingForm({ onCancelEdit }: TastingFormProps) {
           )}
         </View>
 
+
         {/* Navigation buttons */}
         <View style={styles.navigationContainer}>
           <TouchableOpacity
@@ -518,7 +517,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 13,
     fontFamily: theme.fontFamily.semibold,
     color: theme.colors.foreground,
   },
@@ -533,7 +532,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.border,
   },
   cancelText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fontFamily.regular,
     color: theme.colors.foreground,
   },
@@ -571,7 +570,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   stepNumber: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.mutedForeground,
   },
@@ -579,7 +578,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   stepTitle: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.mutedForeground,
     textAlign: 'center',
@@ -607,12 +606,12 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   stepHeading: {
-    fontSize: 18,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
   },
   stepDescription: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
   whiskeyList: {
@@ -638,7 +637,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addNewIconText: {
-    fontSize: 20,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.primaryForeground,
   },
@@ -646,13 +645,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addNewTitle: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
     marginBottom: 4,
   },
   addNewDescription: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
   whiskeyItem: {
@@ -670,16 +669,16 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   whiskeyName: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
   },
   whiskeyDetails: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
   whiskeyMeta: {
-    fontSize: 12,
+    fontSize: 11,
     color: theme.colors.mutedForeground,
   },
   editingWhiskeyCard: {
@@ -691,7 +690,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   editingTitle: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
     marginBottom: 8,
@@ -700,7 +699,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   inputLabel: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
   },
@@ -711,7 +710,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.regular,
     color: theme.colors.foreground,
   },
@@ -753,12 +752,12 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   navButtonText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
   },
   submitButtonText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.primaryForeground,
   },

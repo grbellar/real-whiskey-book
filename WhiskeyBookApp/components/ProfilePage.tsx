@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { useTastings, Tasting } from './TastingContext';
@@ -100,6 +101,27 @@ function EditIcon({ color, size = 16 }: { color: string; size?: number }) {
   );
 }
 
+function DeleteIcon({ color, size = 16 }: { color: string; size?: number }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"
+        stroke={color}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M10 11v6M14 11v6"
+        stroke={color}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
 function FilterIcon({ color, size = 16 }: { color: string; size?: number }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -115,7 +137,7 @@ function FilterIcon({ color, size = 16 }: { color: string; size?: number }) {
 }
 
 export function ProfilePage({ onEditTasting }: ProfilePageProps) {
-  const { tastings, setEditingTasting } = useTastings();
+  const { tastings, setEditingTasting, deleteTasting } = useTastings();
   const [sortBy, setSortBy] = useState<'date' | 'rating'>('date');
   const [filterByRating, setFilterByRating] = useState<string>('all');
 
@@ -148,6 +170,27 @@ export function ProfilePage({ onEditTasting }: ProfilePageProps) {
     if (onEditTasting) {
       onEditTasting();
     }
+  };
+
+  const handleDeleteTasting = (tasting: Tasting) => {
+    Alert.alert(
+      'Delete Tasting',
+      `Are you sure you want to delete your tasting of ${tasting.whiskey.name}? This action cannot be undone.`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            deleteTasting(tasting.id);
+            Alert.alert('Success', 'Tasting deleted successfully.');
+          }
+        }
+      ]
+    );
   };
 
   const Tag = ({ tag }: { tag: string }) => (
@@ -188,7 +231,7 @@ export function ProfilePage({ onEditTasting }: ProfilePageProps) {
           </View>
         </View>
         
-        <View style={styles.tastingActions}>
+        <View style={styles.tastingMeta}>
           <View style={styles.ratingContainer}>
             {[...Array(5)].map((_, index) => (
               <StarIcon
@@ -203,13 +246,6 @@ export function ProfilePage({ onEditTasting }: ProfilePageProps) {
             <CalendarIcon color={theme.colors.mutedForeground} size={12} />
             <Text style={styles.dateText}>{formatDate(item.date)}</Text>
           </View>
-          <TouchableOpacity
-            onPress={() => handleEditTasting(item)}
-            style={styles.editButton}
-          >
-            <EditIcon color={theme.colors.foreground} size={12} />
-            <Text style={styles.editButtonText}>Edit</Text>
-          </TouchableOpacity>
         </View>
       </View>
 
@@ -258,6 +294,24 @@ export function ProfilePage({ onEditTasting }: ProfilePageProps) {
           <Text style={styles.notesText}>"{item.notes}"</Text>
         </View>
       )}
+
+      {/* Bottom Actions */}
+      <View style={styles.bottomActions}>
+        <TouchableOpacity
+          onPress={() => handleEditTasting(item)}
+          style={styles.editButton}
+        >
+          <EditIcon color={theme.colors.foreground} size={12} />
+          <Text style={styles.editButtonText}>Edit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleDeleteTasting(item)}
+          style={styles.deleteButton}
+        >
+          <DeleteIcon color={theme.colors.foreground} size={12} />
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -294,28 +348,11 @@ export function ProfilePage({ onEditTasting }: ProfilePageProps) {
 
   return (
     <View style={styles.container}>
-      {/* Profile Header */}
-      <View style={styles.profileHeader}>
-        <View style={styles.profileInfo}>
-          <View style={styles.profileIcon}>
-            <WhiskeyGlassIcon size={32} color={theme.colors.primary} />
-          </View>
-          <View style={styles.profileText}>
-            <Text style={styles.profileTitle}>My Tasting Journal</Text>
-            <Text style={styles.profileStats}>
-              {tastings.length} tastings
-              {tastings.length > 0 && ` • ${averageRating.toFixed(1)} avg rating`}
-            </Text>
-          </View>
-        </View>
-      </View>
-
       {tastings.length > 0 ? (
         <FlatList
           data={filteredTastings}
           renderItem={TastingCard}
           keyExtractor={(item) => item.id}
-          ListHeaderComponent={FilterSection}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.listContainer}
         />
@@ -352,13 +389,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: theme.fontFamily.semibold,
     color: theme.colors.foreground,
     marginBottom: 4,
   },
   profileStats: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
   filterSection: {
@@ -377,7 +414,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   filterButtonText: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.foreground,
   },
   listContainer: {
@@ -397,13 +434,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   whiskeyName: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
     marginBottom: 4,
   },
   whiskeyDetails: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
     marginBottom: 4,
   },
@@ -413,7 +450,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   metaText: {
-    fontSize: 12,
+    fontSize: 11,
     color: theme.colors.mutedForeground,
   },
   contextContainer: {
@@ -426,14 +463,21 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   contextText: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
-  tastingActions: {
+  tastingMeta: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     gap: 12,
+    marginBottom: 12,
+  },
+  bottomActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.border,
   },
   ratingContainer: {
     flexDirection: 'row',
@@ -445,22 +489,44 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   dateText: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
   editButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
+    gap: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 6,
     borderWidth: 1,
     borderColor: theme.colors.border,
+    flex: 1,
+    justifyContent: 'center',
+    marginRight: 8,
   },
   editButtonText: {
-    fontSize: 12,
+    fontSize: 13,
     color: theme.colors.foreground,
+    fontFamily: theme.fontFamily.medium,
+  },
+  deleteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    flex: 1,
+    justifyContent: 'center',
+    marginLeft: 8,
+  },
+  deleteButtonText: {
+    fontSize: 13,
+    color: theme.colors.foreground,
+    fontFamily: theme.fontFamily.medium,
   },
   tagsSection: {
     gap: 8,
@@ -472,7 +538,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   tagGroupLabel: {
-    fontSize: 12,
+    fontSize: 11,
     color: theme.colors.mutedForeground,
     minWidth: 70,
   },
@@ -489,7 +555,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   tagText: {
-    fontSize: 12,
+    fontSize: 11,
     color: theme.colors.secondaryForeground,
   },
   notesSection: {
@@ -498,7 +564,7 @@ const styles = StyleSheet.create({
     borderTopColor: theme.colors.border,
   },
   notesText: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
     fontStyle: 'italic',
   },
@@ -513,13 +579,13 @@ const styles = StyleSheet.create({
     padding: 48,
   },
   emptyStateTitle: {
-    fontSize: 16,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
     marginTop: 16,
     marginBottom: 8,
   },
   emptyStateText: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
     textAlign: 'center',
   },

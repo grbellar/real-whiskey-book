@@ -181,18 +181,20 @@ export function AddWhiskeyModal({ visible, onClose, onWhiskeyAdded }: AddWhiskey
                   </TouchableOpacity>
                   {showTypeDropdown && (
                     <View style={styles.dropdownList}>
-                      {whiskeyTypes.map((type) => (
-                        <TouchableOpacity
-                          key={type}
-                          style={styles.dropdownItem}
-                          onPress={() => {
-                            setSelectedType(type);
-                            setShowTypeDropdown(false);
-                          }}
-                        >
-                          <Text style={styles.dropdownItemText}>{type}</Text>
-                        </TouchableOpacity>
-                      ))}
+                      <ScrollView showsVerticalScrollIndicator={true} nestedScrollEnabled={true}>
+                        {whiskeyTypes.map((type) => (
+                          <TouchableOpacity
+                            key={type}
+                            style={styles.dropdownItem}
+                            onPress={() => {
+                              setSelectedType(type);
+                              setShowTypeDropdown(false);
+                            }}
+                          >
+                            <Text style={styles.dropdownItemText}>{type}</Text>
+                          </TouchableOpacity>
+                        ))}
+                      </ScrollView>
                     </View>
                   )}
                 </View>
@@ -235,18 +237,20 @@ export function AddWhiskeyModal({ visible, onClose, onWhiskeyAdded }: AddWhiskey
                   </TouchableOpacity>
                   {showRegionDropdown && (
                     <View style={styles.dropdownList}>
-                      {regions.map((region) => (
-                        <TouchableOpacity
-                          key={region}
-                          style={styles.dropdownItem}
-                          onPress={() => {
-                            setSelectedRegion(region);
-                            setShowRegionDropdown(false);
-                          }}
-                        >
-                          <Text style={styles.dropdownItemText}>{region}</Text>
-                        </TouchableOpacity>
-                      ))}
+                      <ScrollView showsVerticalScrollIndicator={true} nestedScrollEnabled={true}>
+                        {regions.map((region) => (
+                          <TouchableOpacity
+                            key={region}
+                            style={styles.dropdownItem}
+                            onPress={() => {
+                              setSelectedRegion(region);
+                              setShowRegionDropdown(false);
+                            }}
+                          >
+                            <Text style={styles.dropdownItemText}>{region}</Text>
+                          </TouchableOpacity>
+                        ))}
+                      </ScrollView>
                     </View>
                   )}
                 </View>
@@ -326,16 +330,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconText: {
-    fontSize: 24,
+    fontSize: 18,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: theme.fontFamily.semibold,
     color: theme.colors.foreground,
     marginBottom: 4,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fontFamily.regular,
     color: theme.colors.mutedForeground,
     lineHeight: 20,
@@ -353,7 +357,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   inputLabel: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
   },
@@ -364,7 +368,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.regular,
     color: theme.colors.foreground,
   },
@@ -383,7 +387,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dropdownText: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.regular,
     color: theme.colors.foreground,
   },
@@ -413,7 +417,7 @@ const styles = StyleSheet.create({
     borderBottomColor: theme.colors.border,
   },
   dropdownItemText: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.regular,
     color: theme.colors.foreground,
   },
@@ -433,7 +437,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cancelButtonText: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
   },
@@ -446,7 +450,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addButtonText: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.primaryForeground,
   },

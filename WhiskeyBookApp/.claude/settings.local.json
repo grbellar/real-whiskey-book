@@ -5,7 +5,9 @@
       "Bash(npm uninstall:*)",
       "WebFetch(domain:fonts.google.com)",
       "Bash(curl:*)",
-      "Bash(npm run lint:*)"
+      "Bash(npm run lint:*)",
+      "Bash(npm test)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": [],
     "ask": []

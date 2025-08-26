@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   tabLabel: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: theme.fontFamily.medium,
   },
 });

@@ -4,8 +4,7 @@ import {
   Text, 
   TouchableOpacity, 
   TextInput, 
-  StyleSheet,
-  ScrollView 
+  StyleSheet
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { theme } from '../theme';
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   label: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
     color: theme.colors.foreground,
     marginBottom: 12,
@@ -186,7 +185,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.border,
   },
   tagText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fontFamily.medium,
   },
   selectedTagText: {
@@ -209,7 +208,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: theme.colors.foreground,
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fontFamily.regular,
     paddingVertical: 6,
     paddingHorizontal: 4,
@@ -232,7 +231,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   addTagText: {
-    fontSize: 14,
+    fontSize: 13,
     color: theme.colors.mutedForeground,
   },
 });

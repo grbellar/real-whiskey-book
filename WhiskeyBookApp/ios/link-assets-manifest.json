@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Lexend-Bold.ttf",
+      "sha1": "62cd66b6220f50f73f17df8382e856cc4a85efc0"
+    },
+    {
+      "path": "assets/fonts/Lexend-Medium.ttf",
+      "sha1": "efbf63563103071a277b491cdc2302ff2030aa70"
+    },
+    {
+      "path": "assets/fonts/Lexend-Regular.ttf",
+      "sha1": "c14fcff54853e387ddd584673d657a8ffa330592"
+    },
+    {
+      "path": "assets/fonts/Lexend-SemiBold.ttf",
+      "sha1": "3ed7371ae5ae4abbd7c64d6edc169ee2066c31fe"
+    }
+  ]
+}

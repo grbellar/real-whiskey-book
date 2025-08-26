@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx react-native:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm install:*)",
+      "Bash(pod install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

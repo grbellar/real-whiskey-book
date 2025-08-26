@@ -11,6 +11,7 @@ import {
 import Svg, { Path } from 'react-native-svg';
 import { StarRating } from './StarRating';
 import { TagSelector } from './TagSelector';
+import { AddWhiskeyModal } from './AddWhiskeyModal';
 import { useTastings, Whiskey } from './TastingContext';
 import { theme } from '../theme';
 
@@ -72,6 +73,7 @@ function XIcon({ color, size = 20 }: { color: string; size?: number }) {
 export function TastingForm({ onCancelEdit }: TastingFormProps) {
   const { addTasting, updateTasting, editingTasting, setEditingTasting, whiskeyDatabase } = useTastings();
   const [currentStep, setCurrentStep] = useState(1);
+  const [showAddWhiskeyModal, setShowAddWhiskeyModal] = useState(false);
   const isEditing = !!editingTasting;
   
   const [tastingData, setTastingData] = useState<TastingData>({
@@ -214,6 +216,15 @@ export function TastingForm({ onCancelEdit }: TastingFormProps) {
     setTastingData(prev => ({ ...prev, whiskey }));
   };
 
+  const handleAddNewWhiskey = () => {
+    setShowAddWhiskeyModal(true);
+  };
+
+  const handleWhiskeyAdded = (whiskey: Whiskey) => {
+    selectWhiskey(whiskey);
+    setShowAddWhiskeyModal(false);
+  };
+
   const progress = (currentStep / STEPS.length) * 100;
 
   return (
@@ -278,6 +289,21 @@ export function TastingForm({ onCancelEdit }: TastingFormProps) {
               </Text>
               
               <View style={styles.whiskeyList}>
+                <TouchableOpacity
+                  onPress={handleAddNewWhiskey}
+                  style={styles.addNewWhiskeyItem}
+                >
+                  <View style={styles.addNewIcon}>
+                    <Text style={styles.addNewIconText}>+</Text>
+                  </View>
+                  <View style={styles.addNewContent}>
+                    <Text style={styles.addNewTitle}>Add New Whiskey</Text>
+                    <Text style={styles.addNewDescription}>
+                      Create a new whiskey entry for your collection
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
                 {whiskeyDatabase.map((whiskey) => (
                   <TouchableOpacity
                     key={whiskey.id}
@@ -459,6 +485,12 @@ export function TastingForm({ onCancelEdit }: TastingFormProps) {
           )}
         </View>
       </View>
+
+      <AddWhiskeyModal
+        visible={showAddWhiskeyModal}
+        onClose={() => setShowAddWhiskeyModal(false)}
+        onWhiskeyAdded={handleWhiskeyAdded}
+      />
     </ScrollView>
   );
 }
@@ -585,6 +617,43 @@ const styles = StyleSheet.create({
   },
   whiskeyList: {
     gap: 12,
+  },
+  addNewWhiskeyItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.primary + '0A',
+    gap: 12,
+  },
+  addNewIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addNewIconText: {
+    fontSize: 20,
+    fontFamily: theme.fontFamily.medium,
+    color: theme.colors.primaryForeground,
+  },
+  addNewContent: {
+    flex: 1,
+  },
+  addNewTitle: {
+    fontSize: 16,
+    fontFamily: theme.fontFamily.medium,
+    color: theme.colors.foreground,
+    marginBottom: 4,
+  },
+  addNewDescription: {
+    fontSize: 14,
+    color: theme.colors.mutedForeground,
   },
   whiskeyItem: {
     padding: 16,
